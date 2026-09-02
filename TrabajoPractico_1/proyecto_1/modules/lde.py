@@ -19,6 +19,10 @@ class ListaDobleEnlazada:
     def cola(self):
         return self._cola
 
+    @property
+    def tamanio(self):
+        return self._tamanio
+
     def esta_vacia(self):
         return self._tamanio == 0
 
