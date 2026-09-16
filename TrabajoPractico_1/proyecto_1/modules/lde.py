@@ -81,7 +81,8 @@ class ListaDobleEnlazada:
         if self.esta_vacia():
             raise IndexError("No se puede extraer de una lista vacía")
 
-        if posicion is None:
+        # Convertir posicion vacía o -1 al índice del último elemento
+        if posicion is None or posicion == -1:
             posicion = self._tamanio - 1
 
         if posicion < 0 or posicion >= self._tamanio:
@@ -132,20 +133,13 @@ class ListaDobleEnlazada:
 
     def invertir(self):
         actual = self._cabeza
-        temp = None
-
-        # Intercambiar anterior y siguiente para cada nodo
+        
         while actual is not None:
-            temp = actual.anterior
-            actual.anterior = actual.siguiente
-            actual.siguiente = temp
-            actual = actual.anterior  # Avanzamos usando el puntero anterior original
+            actual.anterior, actual.siguiente = actual.siguiente, actual.anterior
+            actual = actual.anterior
 
-        # Ajustar cabeza y cola
-        if temp is not None:
-            self._cola = self._cabeza
-            self._cabeza = temp.anterior
-
+        self._cabeza, self._cola = self._cola, self._cabeza
+        
     def concatenar(self, lista):
         actual = lista._cabeza
         while actual is not None:
