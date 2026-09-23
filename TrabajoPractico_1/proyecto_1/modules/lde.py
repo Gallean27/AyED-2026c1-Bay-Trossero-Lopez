@@ -20,7 +20,12 @@ class ListaDobleEnlazada:
     """
 
     def __init__(self):
-        """Inicializa una lista doblemente enlazada vacía."""
+        """
+        Inicializa una lista doblemente enlazada vacía.
+        
+        Precondición: Ninguna.
+        Postcondición: Se crea una lista vacía con cabeza=None, cola=None y tamaño=0.
+        """
         self._cabeza = None
         self._cola = None
         self._tamanio = 0
@@ -41,19 +46,29 @@ class ListaDobleEnlazada:
         return self._tamanio
 
     def esta_vacia(self):
-        """Verifica si la lista está vacía."""
+        """
+        Verifica si la lista está vacía.
+        
+        Precondición: Ninguna.
+        Postcondición: Retorna True si el tamaño es 0, False en caso contrario.
+        """
         return self._tamanio == 0
 
     def __len__(self):
-        """Permite usar la función nativa len(lista) para obtener el tamaño."""
+        """
+        Permite usar la función nativa len(lista) para obtener el tamaño.
+        
+        Precondición: Ninguna.
+        Postcondición: Retorna un entero mayor o igual a 0.
+        """
         return self._tamanio
 
     def agregar_al_inicio(self, item):
         """
         Inserta un nuevo elemento al principio de la lista.
 
-        Parámetros:
-            item: El dato que se desea agregar.
+        Precondición: 'item' debe ser un dato válido a almacenar.
+        Postcondición: La lista incrementa su tamaño en 1 y 'item' queda en la cabeza.
         """
         nuevo_nodo = Nodo(item)
         if self.esta_vacia():
@@ -69,8 +84,8 @@ class ListaDobleEnlazada:
         """
         Inserta un nuevo elemento al final de la lista.
 
-        Parámetros:
-            item: El dato que se desea agregar.
+        Precondición: 'item' debe ser un dato válido a almacenar.
+        Postcondición: La lista incrementa su tamaño en 1 y 'item' queda en la cola.
         """
         nuevo_nodo = Nodo(item)
         if self.esta_vacia():
@@ -86,10 +101,8 @@ class ListaDobleEnlazada:
         """
         Inserta un elemento en una posición específica de la lista.
 
-        Parámetros:
-            item: El dato a insertar.
-            posicion (int, opcional): Índice donde se insertará el elemento. 
-                                      Si es None o igual al tamaño, inserta al final.
+        Precondición: 'posicion' debe ser None o un entero dentro del rango [0, len(lista)].
+        Postcondición: Inserta el item en el índice indicado manteniendo los enlaces correctos.
 
         Excepciones:
             IndexError: Si la posición está fuera de los límites válidos.
@@ -123,12 +136,8 @@ class ListaDobleEnlazada:
         """
         Remueve y retorna el elemento en la posición especificada.
 
-        Parámetros:
-            posicion (int, opcional): Índice del elemento a eliminar. 
-                                      Por defecto (o -1) remueve el último.
-
-        Retorna:
-            El dato almacenado en el nodo eliminado.
+        Precondición: La lista no debe estar vacía y 'posicion' estar en el rango válido.
+        Postcondición: Se elimina el nodo, el tamaño decrece en 1 y se retorna su dato.
 
         Excepciones:
             IndexError: Si la lista está vacía o la posición es inválida.
@@ -136,7 +145,6 @@ class ListaDobleEnlazada:
         if self.esta_vacia():
             raise IndexError("No se puede extraer de una lista vacía")
 
-        # Convertir posicion vacía o -1 al índice del último elemento
         if posicion is None or posicion == -1:
             posicion = self._tamanio - 1
 
@@ -179,38 +187,38 @@ class ListaDobleEnlazada:
 
     def copiar(self):
         """
-        Crea una copia independiente (superficial) de la lista actual.
+        Crea una copia independiente de la lista actual en O(n).
 
-        Retorna:
-            ListaDobleEnlazada: Una nueva instancia con los mismos datos.
+        Precondición: Ninguna.
+        Postcondición: Retorna una nueva instancia de ListaDobleEnlazada idéntica a la original.
         """
         nueva_lista = ListaDobleEnlazada()
         actual = self._cabeza
-        # O(n) porque recorre una sola vez y inserta al final en O(1)
         while actual is not None:
             nueva_lista.agregar_al_final(actual.dato)
             actual = actual.siguiente
         return nueva_lista
 
     def invertir(self):
-        """Invierte el orden de los elementos de la lista sobre la misma instancia."""
-        actual = self._cabeza
+        """
+        Invierte el orden de los elementos sobre la misma instancia.
         
+        Precondición: Ninguna.
+        Postcondición: Modifica la lista in-place intercambiando punteros de cabeza a cola.
+        """
+        actual = self._cabeza
         while actual is not None:
             actual.anterior, actual.siguiente = actual.siguiente, actual.anterior
             actual = actual.anterior
 
         self._cabeza, self._cola = self._cola, self._cabeza
-        
+
     def concatenar(self, lista):
         """
-        Agrega todos los elementos de otra lista al final de la lista actual.
+        Agrega todos los elementos de otra lista al final de la actual.
 
-        Parámetros:
-            lista (ListaDobleEnlazada): La lista que se agregará.
-
-        Retorna:
-            ListaDobleEnlazada: La misma lista modificada.
+        Precondición: 'lista' debe ser una instancia válida de ListaDobleEnlazada.
+        Postcondición: Modifica la lista actual agregando los elementos de la lista recibida.
         """
         actual = lista._cabeza
         while actual is not None:
@@ -222,15 +230,20 @@ class ListaDobleEnlazada:
         """
         Permite usar el operador '+' para unir dos listas en una nueva.
 
-        Ejemplo:
-            nueva = lista1 + lista2
+        Precondición: 'lista' debe ser una instancia de ListaDobleEnlazada.
+        Postcondición: Retorna una nueva lista combinación de ambas sin modificar las originales.
         """
         nueva_lista = self.copiar()
         nueva_lista.concatenar(lista)
         return nueva_lista
 
     def __iter__(self):
-        """Permite iterar la lista directamente mediante un bucle for."""
+        """
+        Permite iterar la lista mediante un bucle for.
+        
+        Precondición: Ninguna.
+        Postcondición: Genera un iterador con los datos desde la cabeza hasta la cola.
+        """
         actual = self._cabeza
         while actual is not None:
             yield actual.dato
