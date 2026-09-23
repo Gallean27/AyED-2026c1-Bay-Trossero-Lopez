@@ -2,10 +2,24 @@
 # Crear tantos módulos como sea necesario para organizar el código 
 
 class ColaCircular:
-    """Implementación de una Cola Circular de tamaño fijo."""
+    """
+    Implementación de una cola circular de tamaño fijo sobre un arreglo de Python.
+    
+    Atributos:
+        _capacidad (int): Tamaño máximo asignado para la cola.
+        _items (list): Arreglo que almacena los elementos.
+        _frente (int): Índice del primer elemento de la cola.
+        _final (int): Índice de la posición disponible para el próximo encolado.
+        _tamanio (int): Cantidad de elementos almacenados en tiempo real.
+    """
 
     def __init__(self, capacidad):
-        """Inicializa la cola con una capacidad máxima dada."""
+        """
+        Inicializa una cola circular vacía con una capacidad determinada.
+
+        Parámetros:
+            capacidad (int): Capacidad máxima de elementos.
+        """
         if capacidad <= 0:
             raise ValueError("La capacidad debe ser un entero positivo.")
         
@@ -16,18 +30,25 @@ class ColaCircular:
         self._tamanio = 0
 
     def esta_vacia(self):
-        """Devuelve True si la cola está vacía."""
+        """
+        Devuelve True si la cola está vacía.
+        """
         return self._tamanio == 0
 
     def esta_llena(self):
-        """Devuelve True si la cola alcanzó su capacidad máxima."""
+        """
+        Devuelve True si la cola alcanzó su capacidad máxima.
+        """
         return self._tamanio == self._capacidad
 
     def encolar(self, item):
         """
-        Agrega un elemento al final de la cola.
-        Lanza OverflowError si la cola está llena.
+        Agrega un elemento al final de la cola circular.
+
+        Excepciones:
+            OverflowError: Si se intenta encolar en una cola llena.
         """
+
         if self.esta_llena():
             raise OverflowError("La cola está llena.")
         
@@ -57,6 +78,17 @@ class ColaCircular:
         if self.esta_vacia():
             raise IndexError("La cola está vacía.")
         return self._items[self._frente]
+
+    def primero(self):
+        """Alias de frente() para compatibilidad con tests."""
+        return self.frente()
+
+    def vaciar(self):
+        """Reinicia la cola circular a su estado vacio original."""
+        self._items = [None] * self._capacidad
+        self._frente = 0
+        self._final = 0
+        self._tamanio = 0
 
     def __len__(self):
         """Devuelve la cantidad actual de elementos en la cola."""
