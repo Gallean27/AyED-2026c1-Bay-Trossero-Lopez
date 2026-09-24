@@ -57,7 +57,7 @@ def medir_tiempos():
     plt.savefig('docs/grafica_copiar_invertir.png')
     plt.close()
 
-    print("¡Mediciones completadas! Las imágenes se guardaron en la carpeta docs/.")
+    print("Mediciones completadas, Las imágenes se guardaron en la carpeta docs/.")
 
 if __name__ == "__main__":
     medir_tiempos()
