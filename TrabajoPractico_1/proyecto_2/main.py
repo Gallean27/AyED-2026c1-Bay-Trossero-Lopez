@@ -1,4 +1,4 @@
-from modules.modulo1 import ColaCircular  # Donde tengo la clase ColaCircular
+from modules.ColaCircular import ColaCircular  # Donde tengo la clase ColaCircular
 
 class Proceso:
     """Clase que representa un proceso en el sistema operativo."""

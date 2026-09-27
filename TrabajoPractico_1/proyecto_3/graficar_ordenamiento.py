@@ -59,10 +59,10 @@ def medir_tiempos():
     plt.grid(True)
     plt.legend()
     
-    plt.savefig('docs/grafica_ordenamientos.png')
+    plt.savefig('data/grafica_ordenamientos.png')
     plt.close()
 
-    print("\n¡Mediciones finalizadas! La imagen se guardó en docs/grafica_ordenamientos.png")
+    print("\n¡Mediciones finalizadas! La imagen se guardó en data/grafica_ordenamientos.png")
 
 if __name__ == "__main__":
     medir_tiempos()

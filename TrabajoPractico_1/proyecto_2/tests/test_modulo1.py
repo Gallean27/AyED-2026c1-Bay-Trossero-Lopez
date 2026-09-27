@@ -3,7 +3,7 @@
 # -*- coding: utf-8 -*-
 
 import unittest
-from proyecto_2.modules.modulo1 import ColaCircular
+from modules.ColaCircular import ColaCircular
 
 
 class TestColaCircular(unittest.TestCase):
