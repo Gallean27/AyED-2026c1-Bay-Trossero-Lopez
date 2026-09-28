@@ -50,7 +50,7 @@ def medir_tiempos():
     plt.figure(figsize=(10, 6))
     plt.plot(tamanos_N, tiempos_burbuja, label='Burbuja - O(N^2)', color='red', marker='o')
     plt.plot(tamanos_N, tiempos_quicksort, label='Quicksort - O(N log N)', color='orange', marker='s')
-    plt.plot(tamanos_N, tiempos_radix, label='Radix Sort - O(d*N)', color='blue', marker='^')
+    plt.plot(tamanos_N, tiempos_radix, label=r'Radix Sort - $O(d \cdot (n + k))$', color='blue', marker='^')
     plt.plot(tamanos_N, tiempos_python, label='sorted() Python - O(N log N)', color='green', marker='d')
 
     plt.title('Comparativa de Algoritmos de Ordenamiento')
