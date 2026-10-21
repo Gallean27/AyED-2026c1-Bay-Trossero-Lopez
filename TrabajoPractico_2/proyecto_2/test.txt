@@ -1,0 +1,47 @@
+import matplotlib.pyplot as plt
+from modules.temperaturas import Temperaturas_DB
+
+db = Temperaturas_DB()
+
+# Cargar datos desde archivo
+with open("data/muestras.txt", "r") as archivo:
+    for linea in archivo:
+        fecha, temperatura = linea.strip().split(";")
+        db.guardar_temperatura(float(temperatura), fecha)
+
+# Obtener lista de strings en formato "dd/mm/aaaa: valor°C"
+datos = db.devolver_temperaturas("01/01/2025", "31/01/2025")
+
+# Convertir cada string en (fecha, temperatura)
+datos_convertidos = []
+for item in datos:
+    # separar en dos partes: fecha y valor
+    partes = item.split(":")
+    fecha = partes[0].strip()
+    temperatura = float(partes[1].replace("°C", "").strip())
+    datos_convertidos.append((fecha, temperatura))
+
+# Ordenar por temperatura
+datos_ordenados = sorted(datos_convertidos, key=lambda x: x[1])
+
+# Extraer listas
+fechas = [d[0] for d in datos_ordenados]
+temps = [d[1] for d in datos_ordenados]
+
+# Graficar
+plt.figure(figsize=(12,6))
+plt.bar(fechas, temps, color="skyblue")
+plt.xticks(rotation=90)
+plt.xlabel("Fecha")
+plt.ylabel("Temperatura (°C)")
+plt.title("Temperaturas ordenadas de mínimo a máximo")
+
+# Resaltar extremos
+plt.bar(fechas[0], temps[0], color="blue", label="Mínimo")
+plt.bar(fechas[-1], temps[-1], color="red", label="Máximo")
+plt.legend()
+
+plt.tight_layout()
+plt.savefig("grafica_temperaturas.png")
+plt.show()
+
